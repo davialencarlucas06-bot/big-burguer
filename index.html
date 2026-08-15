@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Burger House</title>
+
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+    <header>
+        <h1>🍔 BURGER HOUSE</h1>
+        <p>Os melhores hambúrgueres da cidade!</p>
+    </header>
+
+
+    <main>
+
+        <!-- CARDÁPIO -->
+        <section class="cardapio">
+
+            <h2>🍔 Nosso Cardápio</h2>
+
+
+            <div class="produto">
+
+                <div>
+                    <h3>🍔 Classic Burger</h3>
+                    <p>Hambúrguer, queijo, alface, tomate e molho especial.</p>
+                    <strong>R$ 15,00</strong>
+                </div>
+
+                <button onclick="adicionar('Classic Burger', 15)">
+                    Adicionar
+                </button>
+
+            </div>
+
+
+            <div class="produto">
+
+                <div>
+                    <h3>🍔 Bacon Burger</h3>
+                    <p>Hambúrguer, queijo, bacon crocante e molho especial.</p>
+                    <strong>R$ 18,00</strong>
+                </div>
+
+                <button onclick="adicionar('Bacon Burger', 18)">
+                    Adicionar
+                </button>
+
+            </div>
+
+
+            <div class="produto">
+
+                <div>
+                    <h3>🍔 Cheddar Burger</h3>
+                    <p>Hambúrguer, muito cheddar e molho especial.</p>
+                    <strong>R$ 17,00</strong>
+                </div>
+
+                <button onclick="adicionar('Cheddar Burger', 17)">
+                    Adicionar
+                </button>
+
+            </div>
+
+
+            <div class="produto">
+
+                <div>
+                    <h3>🍟 Batata Frita</h3>
+                    <p>Porção de batatas fritas crocantes.</p>
+                    <strong>R$ 10,00</strong>
+                </div>
+
+                <button onclick="adicionar('Batata Frita', 10)">
+                    Adicionar
+                </button>
+
+            </div>
+
+
+            <div class="produto">
+
+                <div>
+                    <h3>🥤 Refrigerante</h3>
+                    <p>Refrigerante gelado.</p>
+                    <strong>R$ 6,00</strong>
+                </div>
+
+                <button onclick="adicionar('Refrigerante', 6)">
+                    Adicionar
+                </button>
+
+            </div>
+
+        </section>
+
+
+
+        <!-- CARRINHO -->
+        <section class="carrinho">
+
+            <h2>🛒 Seu Pedido</h2>
+
+            <div id="itens">
+
+                <p>Nenhum produto adicionado.</p>
+
+            </div>
+
+
+            <div class="total">
+
+                <span>Total:</span>
+
+                <strong>
+                    R$ <span id="total">0,00</span>
+                </strong>
+
+            </div>
+
+        </section>
+
+
+
+        <!-- DADOS DO CLIENTE -->
+        <section class="cliente">
+
+            <h2>📋 Seus Dados</h2>
+
+
+            <label for="nome">
+                Nome
+            </label>
+
+            <input
+                type="text"
+                id="nome"
+                placeholder="Digite seu nome"
+            >
+
+
+            <label for="endereco">
+                Endereço
+            </label>
+
+            <textarea
+                id="endereco"
+                placeholder="Digite seu endereço"
+            ></textarea>
+
+
+            <label for="pagamento">
+                Forma de pagamento
+            </label>
+
+            <select id="pagamento">
+
+                <option value="">
+                    Escolha uma opção
+                </option>
+
+                <option value="Pix">
+                    Pix
+                </option>
+
+                <option value="Dinheiro">
+                    Dinheiro
+                </option>
+
+                <option value="Cartão">
+                    Cartão
+                </option>
+
+            </select>
+
+
+            <button
+                class="finalizar"
+                onclick="finalizarPedido()"
+            >
+                📲 Finalizar Pedido pelo WhatsApp
+            </button>
+
+        </section>
+
+    </main>
+
+
+
+    <footer>
+
+        <p>
+            🍔 Burger House
+        </p>
+
+        <p>
+            Feito com ❤️
+        </p>
+
+    </footer>
+
+
+    <!-- JAVASCRIPT -->
+    <script src="script.js"></script>
+
+</body>
+
+</html>
