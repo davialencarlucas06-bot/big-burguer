@@ -1,188 +1,93 @@
 let pedido = [];
+let total = 0;
 
-// ADICIONAR PRODUTO
+function irParaCardapio() {
+  document.getElementById("cardapio").scrollIntoView({
+    behavior: "smooth"
+  });
+}
+
 function adicionar(nome, preco) {
 
-    const produto = pedido.find(item => item.nome === nome);
+  pedido.push({
+    nome: nome,
+    preco: preco
+  });
 
-    if (produto) {
-        produto.quantidade++;
-    } else {
-        pedido.push({
-            nome: nome,
-            preco: preco,
-            quantidade: 1
-        });
-    }
+  total += preco;
 
-    atualizarCarrinho();
+  atualizarPedido();
 }
 
-// REMOVER UMA UNIDADE
-function remover(nome) {
+function atualizarPedido() {
 
-    const produto = pedido.find(item => item.nome === nome);
+  const lista = document.getElementById("listaPedido");
+  const totalElemento = document.getElementById("total");
 
-    if (!produto) return;
+  lista.innerHTML = "";
 
-    produto.quantidade--;
+  if (pedido.length === 0) {
+    lista.innerHTML = "<p>Nenhum item adicionado.</p>";
+    totalElemento.innerText = "0,00";
+    return;
+  }
 
-    if (produto.quantidade <= 0) {
-        pedido = pedido.filter(item => item.nome !== nome);
-    }
+  pedido.forEach((item, index) => {
 
-    atualizarCarrinho();
+    const div = document.createElement("div");
+
+    div.className = "item-pedido";
+
+    div.innerHTML = `
+      <span>${item.nome}</span>
+      <span>
+        R$ ${item.preco.toFixed(2).replace(".", ",")}
+        <button onclick="remover(${index})">❌</button>
+      </span>
+    `;
+
+    lista.appendChild(div);
+  });
+
+  totalElemento.innerText =
+    total.toFixed(2).replace(".", ",");
 }
 
-// ATUALIZAR CARRINHO
-function atualizarCarrinho() {
+function remover(index) {
 
-    const itens = document.getElementById("itens");
-    const totalElemento = document.getElementById("total");
+  total -= pedido[index].preco;
 
-    if (pedido.length === 0) {
+  pedido.splice(index, 1);
 
-        itens.innerHTML = `
-            <p>Nenhum produto adicionado.</p>
-        `;
-
-        totalElemento.textContent = "0,00";
-
-        return;
-    }
-
-    let total = 0;
-
-    itens.innerHTML = "";
-
-    pedido.forEach(produto => {
-
-        const subtotal = produto.preco * produto.quantidade;
-
-        total += subtotal;
-
-        itens.innerHTML += `
-            <div class="item-carrinho">
-
-                <span>
-                    <strong>${produto.nome}</strong><br>
-                    ${produto.quantidade}x
-                    R$ ${subtotal.toFixed(2).replace(".", ",")}
-                </span>
-
-                <button onclick="remover('${produto.nome}')">
-                    −
-                </button>
-
-            </div>
-        `;
-
-    });
-
-    totalElemento.textContent =
-        total.toFixed(2).replace(".", ",");
+  atualizarPedido();
 }
 
-// FINALIZAR PEDIDO
 function finalizarPedido() {
 
-    // VERIFICA SE TEM PRODUTO
-    if (pedido.length === 0) {
+  if (pedido.length === 0) {
+    alert("Adicione algum produto ao pedido primeiro!");
+    return;
+  }
 
-        alert("Adicione algum produto antes de finalizar!");
+  let mensagem = "🍔 *NOVO PEDIDO - ALENCAR BURGER*%0A%0A";
 
-        return;
-    }
+  pedido.forEach((item) => {
+    mensagem += `• ${item.nome} - R$ ${item.preco.toFixed(2).replace(".", ",")}%0A`;
+  });
 
-    // PEGAR DADOS DO CLIENTE
-    const nome =
-        document.getElementById("nome").value.trim();
+  mensagem += `%0A💰 *TOTAL: R$ ${total.toFixed(2).replace(".", ",")}*`;
 
-    const endereco =
-        document.getElementById("endereco").value.trim();
+  /*
+    TROQUE O NÚMERO ABAIXO PELO WHATSAPP
+    DA HAMBURGUERIA.
+    
+    Exemplo:
+    5531999999999
+  */
 
-    const pagamento =
-        document.getElementById("pagamento").value;
+  const numero = "5531999999999";
 
-    // VERIFICAR NOME
-    if (nome === "") {
+  const url = `https://wa.me/${numero}?text=${mensagem}`;
 
-        alert("Digite seu nome.");
-
-        return;
-    }
-
-    // VERIFICAR ENDEREÇO
-    if (endereco === "") {
-
-        alert("Digite seu endereço.");
-
-        return;
-    }
-
-    // VERIFICAR PAGAMENTO
-    if (pagamento === "") {
-
-        alert("Escolha a forma de pagamento.");
-
-        return;
-    }
-
-    // CALCULAR TOTAL
-    let total = 0;
-
-    // COMEÇAR MENSAGEM
-    let mensagem =
-        "🍔 *NOVO PEDIDO - BURGER HOUSE*%0A%0A";
-
-    // DADOS DO CLIENTE
-    mensagem +=
-        `👤 *Nome:* ${encodeURIComponent(nome)}%0A`;
-
-    mensagem +=
-        `📍 *Endereço:* ${encodeURIComponent(endereco)}%0A`;
-
-    mensagem +=
-        `💳 *Pagamento:* ${encodeURIComponent(pagamento)}%0A%0A`;
-
-    mensagem +=
-        "🛒 *PEDIDO:*%0A";
-
-    // PRODUTOS
-    pedido.forEach(produto => {
-
-        const subtotal =
-            produto.preco * produto.quantidade;
-
-        total += subtotal;
-
-        mensagem +=
-            `• ${produto.quantidade}x ${encodeURIComponent(produto.nome)} - R$ ${subtotal.toFixed(2).replace(".", ",")}%0A`;
-
-    });
-
-    // TOTAL
-    mensagem +=
-        `%0A💰 *TOTAL: R$ ${total.toFixed(2).replace(".", ",")}*`;
-
-    /*
-       ==================================
-       NÚMERO DO WHATSAPP DO VENDEDOR
-       ==================================
-
-       POR ENQUANTO DEIXE ASSIM.
-
-       Depois vamos trocar pelo número
-       real do empreendedor.
-    */
-
-    const telefone =
-        "5500000000000";
-
-    // CRIAR LINK DO WHATSAPP
-    const url =
-        `https://wa.me/${telefone}?text=${mensagem}`;
-
-    // ABRIR WHATSAPP
-    window.open(url, "_blank");
+  window.open(url, "_blank");
 }
