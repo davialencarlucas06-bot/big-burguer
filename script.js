@@ -8,11 +8,9 @@ let pagamentoSelecionado = "";
 ========================= */
 
 function entrarNoCardapio() {
-
   document.getElementById("cardapio").scrollIntoView({
     behavior: "smooth"
   });
-
 }
 
 
@@ -21,7 +19,6 @@ function entrarNoCardapio() {
 ========================= */
 
 function mostrarPromocoes() {
-
   const promocoes = document.getElementById("promocoes");
 
   promocoes.classList.remove("escondida");
@@ -32,15 +29,13 @@ function mostrarPromocoes() {
       block: "start"
     });
   }, 100);
-
 }
 
 
 function fecharPromocoes() {
-
-  document.getElementById("promocoes")
+  document
+    .getElementById("promocoes")
     .classList.add("escondida");
-
 }
 
 
@@ -60,7 +55,6 @@ function adicionar(nome, preco) {
   atualizarPedido();
 
   abrirCarrinho();
-
 }
 
 
@@ -71,15 +65,10 @@ function adicionar(nome, preco) {
 function atualizarPedido() {
 
   const lista = document.getElementById("listaPedido");
-
-  const totalElemento =
-    document.getElementById("total");
-
-  const contador =
-    document.getElementById("contador");
+  const totalElemento = document.getElementById("total");
+  const contador = document.getElementById("contador");
 
   lista.innerHTML = "";
-
 
   contador.innerText = pedido.length;
 
@@ -97,16 +86,12 @@ function atualizarPedido() {
 
   pedido.forEach((item, index) => {
 
-    const div =
-      document.createElement("div");
+    const div = document.createElement("div");
 
     div.className = "item-pedido";
 
-
     div.innerHTML = `
-      <span>
-        ${item.nome}
-      </span>
+      <span>${item.nome}</span>
 
       <span>
         R$ ${formatarPreco(item.preco)}
@@ -117,20 +102,16 @@ function atualizarPedido() {
       </span>
     `;
 
-
     lista.appendChild(div);
-
   });
 
 
-  totalElemento.innerText =
-    formatarPreco(total);
-
+  totalElemento.innerText = formatarPreco(total);
 }
 
 
 /* =========================
-   REMOVER
+   REMOVER PRODUTO
 ========================= */
 
 function remover(index) {
@@ -140,12 +121,11 @@ function remover(index) {
   pedido.splice(index, 1);
 
   atualizarPedido();
-
 }
 
 
 /* =========================
-   ABRIR / FECHAR CARRINHO
+   CARRINHO
 ========================= */
 
 function abrirCarrinho() {
@@ -153,7 +133,6 @@ function abrirCarrinho() {
   document
     .getElementById("carrinho")
     .classList.add("aberto");
-
 }
 
 
@@ -162,49 +141,47 @@ function fecharCarrinho() {
   document
     .getElementById("carrinho")
     .classList.remove("aberto");
-
 }
 
 
 /* =========================
-   FINALIZAÇÃO
+   ABRIR FINALIZAÇÃO
 ========================= */
 
 function abrirFinalizacao() {
 
   if (pedido.length === 0) {
 
-    alert(
-      "Adicione algum produto ao pedido primeiro!"
-    );
+    alert("Seu carrinho está vazio!");
 
     return;
   }
 
 
-  document
-    .getElementById("totalFinal")
-    .innerText = formatarPreco(total);
+  document.getElementById("totalFinal").innerText =
+    formatarPreco(total);
 
 
   document
     .getElementById("finalizacao")
     .classList.add("aberto");
-
 }
 
+
+/* =========================
+   FECHAR FINALIZAÇÃO
+========================= */
 
 function fecharFinalizacao() {
 
   document
     .getElementById("finalizacao")
     .classList.remove("aberto");
-
 }
 
 
 /* =========================
-   PAGAMENTO
+   FORMA DE PAGAMENTO
 ========================= */
 
 function selecionarPagamento(pagamento, botao) {
@@ -212,50 +189,46 @@ function selecionarPagamento(pagamento, botao) {
   pagamentoSelecionado = pagamento;
 
 
+  // Remove seleção dos outros botões
   document
     .querySelectorAll(".pagamento")
-    .forEach((elemento) => {
+    .forEach(function(elemento) {
 
-      elemento.classList.remove(
-        "selecionado"
-      );
+      elemento.classList.remove("selecionado");
 
     });
 
 
+  // Marca o botão escolhido
   botao.classList.add("selecionado");
 
 
+  // Mostra troco somente para dinheiro
   const trocoArea =
     document.getElementById("trocoArea");
 
 
   if (pagamento === "Dinheiro") {
 
-    trocoArea.classList.remove(
-      "escondida"
-    );
+    trocoArea.classList.remove("escondida");
 
   } else {
 
-    trocoArea.classList.add(
-      "escondida"
-    );
+    trocoArea.classList.add("escondida");
 
   }
-
 }
 
 
 /* =========================
-   ENVIAR WHATSAPP
+   ENVIAR PEDIDO PARA WHATSAPP
 ========================= */
 
 function enviarWhatsApp() {
 
   if (pedido.length === 0) {
 
-    alert("Seu pedido está vazio.");
+    alert("Seu pedido está vazio!");
 
     return;
   }
@@ -275,6 +248,7 @@ function enviarWhatsApp() {
       .trim();
 
 
+  // Verifica nome
   if (nome === "") {
 
     alert("Digite seu nome.");
@@ -283,17 +257,19 @@ function enviarWhatsApp() {
   }
 
 
+  // Verifica endereço
   if (endereco === "") {
 
-    alert("Digite o endereço ou ponto de referência.");
+    alert("Digite seu endereço ou ponto de referência.");
 
     return;
   }
 
 
+  // Verifica pagamento
   if (pagamentoSelecionado === "") {
 
-    alert("Escolha uma forma de pagamento.");
+    alert("Selecione uma forma de pagamento.");
 
     return;
   }
@@ -314,14 +290,14 @@ function enviarWhatsApp() {
 
 
   mensagem +=
-    `📍 *Entrega:* ${endereco}%0A%0A`;
+    `📍 *Endereço:* ${endereco}%0A%0A`;
 
 
   mensagem +=
     "🛒 *PEDIDO:*%0A";
 
 
-  pedido.forEach((item) => {
+  pedido.forEach(function(item) {
 
     mensagem +=
       `• ${item.nome} - R$ ${formatarPreco(item.preco)}%0A`;
@@ -334,33 +310,35 @@ function enviarWhatsApp() {
 
 
   mensagem +=
-    `💳 *Pagamento:* ${pagamentoSelecionado}%0A`;
+    `💳 *FORMA DE PAGAMENTO: ${pagamentoSelecionado}*%0A`;
 
 
+  // Se for dinheiro, mostra o troco
   if (
     pagamentoSelecionado === "Dinheiro" &&
     troco !== ""
   ) {
 
     mensagem +=
-      `💵 *Troco para:* R$ ${troco}%0A`;
-
+      `💵 *Troco para: R$ ${troco}*%0A`;
   }
 
 
   /*
-    COLOQUE AQUI O WHATSAPP DA HAMBURGUERIA.
+  ==================================
+  COLOQUE O WHATSAPP AQUI
+  ==================================
 
-    Exemplo:
-    5531999999999
+  Exemplo:
 
-    Não coloque:
-    +55
-    espaços
-    parênteses
-    hífens
+  5531999999999
+
+  Não coloque:
+  +55
+  espaços
+  parênteses
+  hífens
   */
-
 
   const numero =
     "5531999999999";
@@ -371,7 +349,6 @@ function enviarWhatsApp() {
 
 
   window.open(url, "_blank");
-
 }
 
 
@@ -384,5 +361,4 @@ function formatarPreco(valor) {
   return valor
     .toFixed(2)
     .replace(".", ",");
-
 }
