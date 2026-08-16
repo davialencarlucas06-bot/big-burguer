@@ -1,216 +1,163 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
-
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-    <title>Burger House</title>
-
-    <link rel="stylesheet" href="style.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Alencar Burger 🍔</title>
+  <link rel="stylesheet" href="style.css">
 </head>
 
 <body>
 
-    <header>
-        <h1>🍔 BURGER HOUSE</h1>
-        <p>Os melhores hambúrgueres da cidade!</p>
-    </header>
-
-
-    <main>
-
-        <!-- CARDÁPIO -->
-        <section class="cardapio">
-
-            <h2>🍔 Nosso Cardápio</h2>
-
-
-            <div class="produto">
-
-                <div>
-                    <h3>🍔 Classic Burger</h3>
-                    <p>Hambúrguer, queijo, alface, tomate e molho especial.</p>
-                    <strong>R$ 15,00</strong>
-                </div>
-
-                <button onclick="adicionar('Classic Burger', 15)">
-                    Adicionar
-                </button>
-
-            </div>
-
-
-            <div class="produto">
-
-                <div>
-                    <h3>🍔 Bacon Burger</h3>
-                    <p>Hambúrguer, queijo, bacon crocante e molho especial.</p>
-                    <strong>R$ 18,00</strong>
-                </div>
-
-                <button onclick="adicionar('Bacon Burger', 18)">
-                    Adicionar
-                </button>
-
-            </div>
-
-
-            <div class="produto">
-
-                <div>
-                    <h3>🍔 Cheddar Burger</h3>
-                    <p>Hambúrguer, muito cheddar e molho especial.</p>
-                    <strong>R$ 17,00</strong>
-                </div>
-
-                <button onclick="adicionar('Cheddar Burger', 17)">
-                    Adicionar
-                </button>
-
-            </div>
-
-
-            <div class="produto">
-
-                <div>
-                    <h3>🍟 Batata Frita</h3>
-                    <p>Porção de batatas fritas crocantes.</p>
-                    <strong>R$ 10,00</strong>
-                </div>
-
-                <button onclick="adicionar('Batata Frita', 10)">
-                    Adicionar
-                </button>
-
-            </div>
-
-
-            <div class="produto">
-
-                <div>
-                    <h3>🥤 Refrigerante</h3>
-                    <p>Refrigerante gelado.</p>
-                    <strong>R$ 6,00</strong>
-                </div>
-
-                <button onclick="adicionar('Refrigerante', 6)">
-                    Adicionar
-                </button>
-
-            </div>
-
-        </section>
-
-
-
-        <!-- CARRINHO -->
-        <section class="carrinho">
-
-            <h2>🛒 Seu Pedido</h2>
-
-            <div id="itens">
-
-                <p>Nenhum produto adicionado.</p>
-
-            </div>
-
-
-            <div class="total">
-
-                <span>Total:</span>
-
-                <strong>
-                    R$ <span id="total">0,00</span>
-                </strong>
-
-            </div>
-
-        </section>
-
-
-
-        <!-- DADOS DO CLIENTE -->
-        <section class="cliente">
-
-            <h2>📋 Seus Dados</h2>
-
-
-            <label for="nome">
-                Nome
-            </label>
-
-            <input
-                type="text"
-                id="nome"
-                placeholder="Digite seu nome"
-            >
-
-
-            <label for="endereco">
-                Endereço
-            </label>
-
-            <textarea
-                id="endereco"
-                placeholder="Digite seu endereço"
-            ></textarea>
-
-
-            <label for="pagamento">
-                Forma de pagamento
-            </label>
-
-            <select id="pagamento">
-
-                <option value="">
-                    Escolha uma opção
-                </option>
-
-                <option value="Pix">
-                    Pix
-                </option>
-
-                <option value="Dinheiro">
-                    Dinheiro
-                </option>
-
-                <option value="Cartão">
-                    Cartão
-                </option>
-
-            </select>
-
-
-            <button
-                class="finalizar"
-                onclick="finalizarPedido()"
-            >
-                📲 Finalizar Pedido pelo WhatsApp
-            </button>
-
-        </section>
-
-    </main>
-
-
-
-    <footer>
-
-        <p>
-            🍔 Burger House
-        </p>
-
-        <p>
-            Feito com ❤️
-        </p>
-
-    </footer>
-
-
-    <!-- JAVASCRIPT -->
-    <script src="script.js"></script>
+  <!-- CAPA -->
+  <section class="capa">
+    <div class="capa-conteudo">
+      <h1>🍔 ALENCAR BURGER</h1>
+      <p>O sabor que faz você voltar!</p>
+      <button onclick="irParaCardapio()">VER CARDÁPIO</button>
+    </div>
+  </section>
+
+  <!-- PROMOÇÕES -->
+  <section class="secao">
+    <h2>🔥 PROMOÇÕES</h2>
+
+    <div class="cards">
+
+      <div class="card promocao">
+        <div class="foto">🍔</div>
+        <h3>Combo Clássico</h3>
+        <p>Hambúrguer + batata + refrigerante</p>
+        <span class="preco-antigo">R$ 29,90</span>
+        <strong>R$ 24,90</strong>
+        <button onclick="adicionar('Combo Clássico', 24.90)">
+          ADICIONAR
+        </button>
+      </div>
+
+      <div class="card promocao">
+        <div class="foto">🍔🍟</div>
+        <h3>Combo Família</h3>
+        <p>2 hambúrgueres + 2 batatas + 2 bebidas</p>
+        <span class="preco-antigo">R$ 49,90</span>
+        <strong>R$ 44,90</strong>
+        <button onclick="adicionar('Combo Família', 44.90)">
+          ADICIONAR
+        </button>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- MAIS VENDIDOS -->
+  <section class="secao" id="cardapio">
+    <h2>⭐ MAIS VENDIDOS</h2>
+
+    <div class="cards">
+
+      <div class="card">
+        <div class="foto">🍔</div>
+        <h3>Alencar Clássico</h3>
+        <p>Pão, carne, queijo, alface e molho especial.</p>
+        <strong>R$ 19,90</strong>
+        <button onclick="adicionar('Alencar Clássico', 19.90)">
+          ADICIONAR
+        </button>
+      </div>
+
+      <div class="card">
+        <div class="foto">🍔</div>
+        <h3>Cheddar Bacon</h3>
+        <p>Carne, cheddar cremoso e bacon crocante.</p>
+        <strong>R$ 22,90</strong>
+        <button onclick="adicionar('Cheddar Bacon', 22.90)">
+          ADICIONAR
+        </button>
+      </div>
+
+      <div class="card">
+        <div class="foto">🍔</div>
+        <h3>Duplo Burger</h3>
+        <p>2 carnes, queijo, molho especial e cebola.</p>
+        <strong>R$ 25,90</strong>
+        <button onclick="adicionar('Duplo Burger', 25.90)">
+          ADICIONAR
+        </button>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- CARDÁPIO -->
+  <section class="secao">
+    <h2>🍔 NOSSO CARDÁPIO</h2>
+
+    <div class="cards">
+
+      <div class="card">
+        <div class="foto">🍔</div>
+        <h3>Hambúrguer Tradicional</h3>
+        <p>Carne artesanal, queijo e molho da casa.</p>
+        <strong>R$ 17,90</strong>
+        <button onclick="adicionar('Hambúrguer Tradicional', 17.90)">
+          ADICIONAR
+        </button>
+      </div>
+
+      <div class="card">
+        <div class="foto">🍔</div>
+        <h3>Chicken Burger</h3>
+        <p>Frango crocante, queijo e molho especial.</p>
+        <strong>R$ 20,90</strong>
+        <button onclick="adicionar('Chicken Burger', 20.90)">
+          ADICIONAR
+        </button>
+      </div>
+
+      <div class="card">
+        <div class="foto">🍟</div>
+        <h3>Batata Frita</h3>
+        <p>Batata crocante com tempero especial.</p>
+        <strong>R$ 9,90</strong>
+        <button onclick="adicionar('Batata Frita', 9.90)">
+          ADICIONAR
+        </button>
+      </div>
+
+      <div class="card">
+        <div class="foto">🥤</div>
+        <h3>Refrigerante</h3>
+        <p>Refrigerante gelado.</p>
+        <strong>R$ 6,00</strong>
+        <button onclick="adicionar('Refrigerante', 6.00)">
+          ADICIONAR
+        </button>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- CARRINHO -->
+  <section class="carrinho">
+    <h2>🛒 SEU PEDIDO</h2>
+
+    <div id="listaPedido">
+      <p>Nenhum item adicionado.</p>
+    </div>
+
+    <h3>Total: R$ <span id="total">0,00</span></h3>
+
+    <button class="finalizar" onclick="finalizarPedido()">
+      FINALIZAR PEDIDO
+    </button>
+  </section>
+
+  <footer>
+    <p>🍔 Alencar Burger</p>
+    <p>Feito com ❤️ para você</p>
+  </footer>
+
+  <script src="script.js"></script>
 
 </body>
-
 </html>
