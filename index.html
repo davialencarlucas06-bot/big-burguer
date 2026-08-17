@@ -1,241 +1,319 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <meta name="description" content="Alencar Burger - Hambúrgueres artesanais, combos e acompanhamentos.">
+
   <title>Alencar Burger 🍔</title>
+
   <link rel="stylesheet" href="style.css">
 </head>
 
 <body>
 
-<section class="capa">
-  <div class="capa-conteudo">
-    <div class="logo">🍔</div>
-    <p class="capa-tag">ARTESANAL • SABOR • QUALIDADE</p>
-    <h1>ALENCAR BURGER</h1>
-    <p>O sabor que faz você voltar.</p>
+<!-- =========================
+     CAPA
+========================= -->
 
-    <button class="btn-principal" onclick="entrarNoCardapio()">
-      ENTRAR NO CARDÁPIO
+<section class="capa" id="inicio">
+
+  <div class="capa-conteudo">
+
+    <div class="logo">🍔</div>
+
+    <span class="capa-tag">
+      ARTESANAL • SABOR • QUALIDADE
+    </span>
+
+    <h1>ALENCAR BURGER</h1>
+
+    <p>
+      O sabor que faz você voltar.
+    </p>
+
+    <button
+      class="btn-principal"
+      onclick="entrarNoCardapio()"
+    >
+      VER CARDÁPIO
     </button>
+
   </div>
+
 </section>
+
+
+<!-- =========================
+     SITE
+========================= -->
 
 <main id="cardapio" class="site">
 
+
+<!-- TOPO -->
+
 <header class="topo">
+
   <div class="marca">
+
     <span>🍔</span>
-    <strong>ALENCAR BURGER</strong>
+
+    <strong>
+      ALENCAR BURGER
+    </strong>
+
   </div>
 
-  <button class="btn-carrinho" onclick="abrirCarrinho()">
-    🛒 <span id="contador">0</span>
-  </button>
+
+  <div class="topo-acoes">
+
+    <button
+      class="btn-pesquisa"
+      onclick="abrirPesquisa()"
+    >
+      🔎
+    </button>
+
+
+    <button
+      class="btn-carrinho"
+      onclick="abrirCarrinho()"
+    >
+      🛒
+
+      <span id="contador">
+        0
+      </span>
+
+    </button>
+
+  </div>
+
 </header>
 
 
-<!-- PROMOÇÕES -->
+<!-- =========================
+     PESQUISA
+========================= -->
+
+<section
+  id="pesquisa"
+  class="pesquisa escondida"
+>
+
+  <div class="campo-pesquisa">
+
+    <span>🔎</span>
+
+    <input
+      type="text"
+      id="campoBusca"
+      placeholder="O que você está procurando?"
+      oninput="pesquisarProdutos()"
+    >
+
+    <button onclick="fecharPesquisa()">
+      ✕
+    </button>
+
+  </div>
+
+</section>
+
+
+<!-- =========================
+     BANNER
+========================= -->
 
 <section class="banner-promocao">
 
   <div>
-    <span>🔥 OFERTAS ESPECIAIS</span>
-    <h2>Promoções da semana</h2>
-    <p>Os melhores combos por preços especiais.</p>
+
+    <span>
+      🔥 OFERTAS ESPECIAIS
+    </span>
+
+    <h2>
+      Promoções da semana
+    </h2>
+
+    <p>
+      Combos especiais por preços incríveis.
+    </p>
+
   </div>
 
+
   <button onclick="mostrarPromocoes()">
-    VER PROMOÇÕES
+    VER OFERTAS
   </button>
 
 </section>
 
 
-<section id="promocoes" class="secao escondida">
-
-  <div class="titulo-secao">
-    <div>
-      <span>🔥 OFERTAS</span>
-      <h2>Promoções</h2>
-    </div>
-
-    <button class="fechar" onclick="fecharPromocoes()">✕</button>
-  </div>
-
-  <div class="carrossel">
-
-    <article class="produto promocao">
-
-      <div class="produto-foto">
-        <img src="https://images.unsplash.com/photo-1550547660-d9450f859349?auto=format&fit=crop&w=800&q=85" alt="Combo Clássico">
-      </div>
-
-      <span class="selo">PROMO</span>
-
-      <h3>Combo Clássico</h3>
-      <p>Hambúrguer + batata + refrigerante.</p>
-
-      <div class="precos">
-        <del>R$ 29,90</del>
-        <strong>R$ 24,90</strong>
-      </div>
-
-      <button onclick="adicionar('Combo Clássico',24.90)">
-        ADICIONAR
-      </button>
-
-    </article>
-
-
-    <article class="produto promocao">
-
-      <div class="produto-foto">
-        <img src="https://images.unsplash.com/photo-1571091718767-18b5b1457add?auto=format&fit=crop&w=800&q=85" alt="Combo Família">
-      </div>
-
-      <span class="selo">PROMO</span>
-
-      <h3>Combo Família</h3>
-      <p>2 hambúrgueres + 2 batatas + 2 bebidas.</p>
-
-      <div class="precos">
-        <del>R$ 49,90</del>
-        <strong>R$ 44,90</strong>
-      </div>
-
-      <button onclick="adicionar('Combo Família',44.90)">
-        ADICIONAR
-      </button>
-
-    </article>
-
-  </div>
-
-</section>
-
-
-<!-- CATEGORIAS -->
+<!-- =========================
+     CATEGORIAS
+========================= -->
 
 <nav class="categorias">
 
-  <button class="categoria ativa" onclick="irPara('hamburgueres')">
+  <button
+    class="categoria ativa"
+    onclick="irPara('hamburgueres')"
+  >
     🍔 Hambúrgueres
   </button>
 
-  <button class="categoria" onclick="irPara('combos')">
+
+  <button
+    class="categoria"
+    onclick="irPara('combos')"
+  >
     🔥 Combos
   </button>
 
-  <button class="categoria" onclick="irPara('acompanhamentos')">
+
+  <button
+    class="categoria"
+    onclick="irPara('acompanhamentos')"
+  >
     🍟 Acompanhamentos
   </button>
 
 </nav>
 
 
-<!-- HAMBÚRGUERES -->
+<!-- =========================
+     OFERTAS
+========================= -->
 
-<section id="hamburgueres" class="secao">
+<section
+  id="promocoes"
+  class="secao escondida"
+>
 
   <div class="titulo-secao">
+
     <div>
-      <span>🍔 CARDÁPIO</span>
-      <h2>Mais pedidos</h2>
+
+      <span>
+        🔥 OFERTAS
+      </span>
+
+      <h2>
+        Promoções
+      </h2>
+
     </div>
+
+
+    <button
+      class="fechar"
+      onclick="fecharPromocoes()"
+    >
+      ✕
+    </button>
+
   </div>
 
-  <p class="arraste">👉 Arraste para o lado para ver mais</p>
 
   <div class="carrossel">
 
-    <article class="produto destaque">
-
-      <span class="mais-vendido">⭐ MAIS VENDIDO</span>
+    <article class="produto promocao">
 
       <div class="produto-foto">
-        <img src="https://images.unsplash.com/photo-1568901346375-23c9450c58cd?auto=format&fit=crop&w=800&q=85" alt="Alencar Clássico">
+
+        <img
+          src="https://images.unsplash.com/photo-1550547660-d9450f859349?auto=format&fit=crop&w=800&q=85"
+          alt="Combo Clássico"
+        >
+
       </div>
 
-      <h3>Alencar Clássico</h3>
-      <p>Pão, carne, queijo, alface e molho especial.</p>
 
-      <strong class="preco">R$ 19,90</strong>
+      <span class="selo">
+        PROMO
+      </span>
 
-      <button onclick="adicionar('Alencar Clássico',19.90)">
+
+      <h3>
+        Combo Clássico
+      </h3>
+
+
+      <p>
+        Hambúrguer + batata + refrigerante.
+      </p>
+
+
+      <div class="precos">
+
+        <del>
+          R$ 29,90
+        </del>
+
+        <strong>
+          R$ 24,90
+        </strong>
+
+      </div>
+
+
+      <button
+        onclick="adicionar('Combo Clássico',24.90)"
+      >
         ADICIONAR
       </button>
 
     </article>
 
 
-    <article class="produto">
+    <article class="produto promocao">
 
       <div class="produto-foto">
-        <img src="https://images.unsplash.com/photo-1553979459-d2229ba7433b?auto=format&fit=crop&w=800&q=85" alt="Cheddar Bacon">
+
+        <img
+          src="https://images.unsplash.com/photo-1571091718767-18b5b1457add?auto=format&fit=crop&w=800&q=85"
+          alt="Combo Família"
+        >
+
       </div>
 
-      <h3>Cheddar Bacon</h3>
-      <p>Carne, cheddar cremoso e bacon crocante.</p>
 
-      <strong class="preco">R$ 22,90</strong>
-
-      <button onclick="adicionar('Cheddar Bacon',22.90)">
-        ADICIONAR
-      </button>
-
-    </article>
+      <span class="selo">
+        PROMO
+      </span>
 
 
-    <article class="produto">
+      <h3>
+        Combo Família
+      </h3>
 
-      <div class="produto-foto">
-        <img src="https://images.unsplash.com/photo-1586190848861-99aa4a171e90?auto=format&fit=crop&w=800&q=85" alt="Duplo Burger">
+
+      <p>
+        2 hambúrgueres + 2 batatas + 2 bebidas.
+      </p>
+
+
+      <div class="precos">
+
+        <del>
+          R$ 49,90
+        </del>
+
+        <strong>
+          R$ 44,90
+        </strong>
+
       </div>
 
-      <h3>Duplo Burger</h3>
-      <p>2 carnes, queijo, molho especial e cebola.</p>
 
-      <strong class="preco">R$ 25,90</strong>
-
-      <button onclick="adicionar('Duplo Burger',25.90)">
-        ADICIONAR
-      </button>
-
-    </article>
-
-
-    <article class="produto">
-
-      <div class="produto-foto">
-        <img src="https://images.unsplash.com/photo-1606755962773-d324e0a13086?auto=format&fit=crop&w=800&q=85" alt="Chicken Burger">
-      </div>
-
-      <h3>Chicken Burger</h3>
-      <p>Frango crocante, queijo e molho especial.</p>
-
-      <strong class="preco">R$ 20,90</strong>
-
-      <button onclick="adicionar('Chicken Burger',20.90)">
-        ADICIONAR
-      </button>
-
-    </article>
-
-
-    <article class="produto">
-
-      <div class="produto-foto">
-        <img src="https://images.unsplash.com/photo-1572802419224-296b0aeee0d9?auto=format&fit=crop&w=800&q=85" alt="Hambúrguer Tradicional">
-      </div>
-
-      <h3>Tradicional</h3>
-      <p>Carne artesanal, queijo e molho da casa.</p>
-
-      <strong class="preco">R$ 17,90</strong>
-
-      <button onclick="adicionar('Hambúrguer Tradicional',17.90)">
+      <button
+        onclick="adicionar('Combo Família',44.90)"
+      >
         ADICIONAR
       </button>
 
@@ -246,51 +324,283 @@
 </section>
 
 
-<!-- COMBOS -->
+<!-- =========================
+     MAIS VENDIDOS
+========================= -->
 
-<section id="combos" class="secao">
+<section
+  id="hamburgueres"
+  class="secao"
+>
 
   <div class="titulo-secao">
+
     <div>
-      <span>🔥 COMBOS</span>
-      <h2>Combos completos</h2>
+
+      <span>
+        ⭐ MAIS VENDIDOS
+      </span>
+
+      <h2>
+        Os favoritos
+      </h2>
+
     </div>
+
   </div>
 
-  <p class="arraste">👉 Arraste para o lado</p>
+
+  <p class="arraste">
+    👉 Arraste para o lado
+  </p>
+
 
   <div class="carrossel">
 
-    <article class="produto">
+    <!-- ALENCAR -->
+
+    <article
+      class="produto destaque"
+      data-nome="Alencar Clássico"
+    >
+
+      <span class="mais-vendido">
+        ⭐ MAIS VENDIDO
+      </span>
+
 
       <div class="produto-foto">
-        <img src="https://images.unsplash.com/photo-1550547660-d9450f859349?auto=format&fit=crop&w=800&q=85" alt="Combo Burger">
+
+        <img
+          src="https://images.unsplash.com/photo-1568901346375-23c9450c58cd?auto=format&fit=crop&w=800&q=85"
+          alt="Alencar Clássico"
+        >
+
       </div>
 
-      <h3>Combo Burger</h3>
-      <p>Hambúrguer + batata + refrigerante.</p>
 
-      <strong class="preco">R$ 24,90</strong>
+      <button
+        class="favorito"
+        onclick="favoritar(this,'Alencar Clássico')"
+      >
+        ♡
+      </button>
 
-      <button onclick="adicionar('Combo Burger',24.90)">
+
+      <h3>
+        Alencar Clássico
+      </h3>
+
+
+      <p>
+        Pão, carne, queijo, alface e molho especial.
+      </p>
+
+
+      <strong class="preco">
+        R$ 19,90
+      </strong>
+
+
+      <button
+        onclick="adicionar('Alencar Clássico',19.90)"
+      >
         ADICIONAR
       </button>
 
     </article>
 
 
-    <article class="produto">
+    <!-- CHEDDAR -->
+
+    <article
+      class="produto"
+      data-nome="Cheddar Bacon"
+    >
 
       <div class="produto-foto">
-        <img src="https://images.unsplash.com/photo-1571091718767-18b5b1457add?auto=format&fit=crop&w=800&q=85" alt="Combo Duplo">
+
+        <img
+          src="https://images.unsplash.com/photo-1553979459-d2229ba7433b?auto=format&fit=crop&w=800&q=85"
+          alt="Cheddar Bacon"
+        >
+
       </div>
 
-      <h3>Combo Duplo</h3>
-      <p>Duplo burger + batata + refrigerante.</p>
 
-      <strong class="preco">R$ 30,90</strong>
+      <button
+        class="favorito"
+        onclick="favoritar(this,'Cheddar Bacon')"
+      >
+        ♡
+      </button>
 
-      <button onclick="adicionar('Combo Duplo',30.90)">
+
+      <h3>
+        Cheddar Bacon
+      </h3>
+
+
+      <p>
+        Carne, cheddar cremoso e bacon crocante.
+      </p>
+
+
+      <strong class="preco">
+        R$ 22,90
+      </strong>
+
+
+      <button
+        onclick="adicionar('Cheddar Bacon',22.90)"
+      >
+        ADICIONAR
+      </button>
+
+    </article>
+
+
+    <!-- DUPLO -->
+
+    <article
+      class="produto"
+      data-nome="Duplo Burger"
+    >
+
+      <div class="produto-foto">
+
+        <img
+          src="https://images.unsplash.com/photo-1586190848861-99aa4a171e90?auto=format&fit=crop&w=800&q=85"
+          alt="Duplo Burger"
+        >
+
+      </div>
+
+
+      <button
+        class="favorito"
+        onclick="favoritar(this,'Duplo Burger')"
+      >
+        ♡
+      </button>
+
+
+      <h3>
+        Duplo Burger
+      </h3>
+
+
+      <p>
+        2 carnes, queijo, molho especial e cebola.
+      </p>
+
+
+      <strong class="preco">
+        R$ 25,90
+      </strong>
+
+
+      <button
+        onclick="adicionar('Duplo Burger',25.90)"
+      >
+        ADICIONAR
+      </button>
+
+    </article>
+
+
+    <!-- CHICKEN -->
+
+    <article
+      class="produto"
+      data-nome="Chicken Burger"
+    >
+
+      <div class="produto-foto">
+
+        <img
+          src="https://images.unsplash.com/photo-1606755962773-d324e0a13086?auto=format&fit=crop&w=800&q=85"
+          alt="Chicken Burger"
+        >
+
+      </div>
+
+
+      <button
+        class="favorito"
+        onclick="favoritar(this,'Chicken Burger')"
+      >
+        ♡
+      </button>
+
+
+      <h3>
+        Chicken Burger
+      </h3>
+
+
+      <p>
+        Frango crocante, queijo e molho especial.
+      </p>
+
+
+      <strong class="preco">
+        R$ 20,90
+      </strong>
+
+
+      <button
+        onclick="adicionar('Chicken Burger',20.90)"
+      >
+        ADICIONAR
+      </button>
+
+    </article>
+
+
+    <!-- TRADICIONAL -->
+
+    <article
+      class="produto"
+      data-nome="Hambúrguer Tradicional"
+    >
+
+      <div class="produto-foto">
+
+        <img
+          src="https://images.unsplash.com/photo-1572802419224-296b0aeee0d9?auto=format&fit=crop&w=800&q=85"
+          alt="Hambúrguer Tradicional"
+        >
+
+      </div>
+
+
+      <button
+        class="favorito"
+        onclick="favoritar(this,'Hambúrguer Tradicional')"
+      >
+        ♡
+      </button>
+
+
+      <h3>
+        Tradicional
+      </h3>
+
+
+      <p>
+        Carne artesanal, queijo e molho da casa.
+      </p>
+
+
+      <strong class="preco">
+        R$ 17,90
+      </strong>
+
+
+      <button
+        onclick="adicionar('Hambúrguer Tradicional',17.90)"
+      >
         ADICIONAR
       </button>
 
@@ -301,51 +611,111 @@
 </section>
 
 
-<!-- ACOMPANHAMENTOS -->
+<!-- =========================
+     COMBOS
+========================= -->
 
-<section id="acompanhamentos" class="secao">
+<section
+  id="combos"
+  class="secao"
+>
 
   <div class="titulo-secao">
+
     <div>
-      <span>🍟 ACOMPANHAMENTOS</span>
-      <h2>Para completar</h2>
+
+      <span>
+        🔥 COMBOS
+      </span>
+
+      <h2>
+        Combos completos
+      </h2>
+
     </div>
+
   </div>
 
-  <p class="arraste">👉 Arraste para o lado</p>
+
+  <p class="arraste">
+    👉 Arraste para o lado
+  </p>
+
 
   <div class="carrossel">
 
-    <article class="produto">
+    <article
+      class="produto"
+      data-nome="Combo Burger"
+    >
 
       <div class="produto-foto">
-        <img src="https://images.unsplash.com/photo-1573080496219-bb080dd4f877?auto=format&fit=crop&w=800&q=85" alt="Batata Frita">
+
+        <img
+          src="https://images.unsplash.com/photo-1550547660-d9450f859349?auto=format&fit=crop&w=800&q=85"
+          alt="Combo Burger"
+        >
+
       </div>
 
-      <h3>Batata Frita</h3>
-      <p>Batata crocante com tempero especial.</p>
 
-      <strong class="preco">R$ 9,90</strong>
+      <h3>
+        Combo Burger
+      </h3>
 
-      <button onclick="adicionar('Batata Frita',9.90)">
+
+      <p>
+        Hambúrguer + batata + refrigerante.
+      </p>
+
+
+      <strong class="preco">
+        R$ 24,90
+      </strong>
+
+
+      <button
+        onclick="adicionar('Combo Burger',24.90)"
+      >
         ADICIONAR
       </button>
 
     </article>
 
 
-    <article class="produto">
+    <article
+      class="produto"
+      data-nome="Combo Duplo"
+    >
 
       <div class="produto-foto">
-        <img src="https://images.unsplash.com/photo-1629203851122-3726ecdf080e?auto=format&fit=crop&w=800&q=85" alt="Refrigerante">
+
+        <img
+          src="https://images.unsplash.com/photo-1571091718767-18b5b1457add?auto=format&fit=crop&w=800&q=85"
+          alt="Combo Duplo"
+        >
+
       </div>
 
-      <h3>Refrigerante</h3>
-      <p>Refrigerante gelado.</p>
 
-      <strong class="preco">R$ 6,00</strong>
+      <h3>
+        Combo Duplo
+      </h3>
 
-      <button onclick="adicionar('Refrigerante',6.00)">
+
+      <p>
+        Duplo burger + batata + refrigerante.
+      </p>
+
+
+      <strong class="preco">
+        R$ 30,90
+      </strong>
+
+
+      <button
+        onclick="adicionar('Combo Duplo',30.90)"
+      >
         ADICIONAR
       </button>
 
@@ -354,58 +724,267 @@
   </div>
 
 </section>
+
+
+<!-- =========================
+     ACOMPANHAMENTOS
+========================= -->
+
+<section
+  id="acompanhamentos"
+  class="secao"
+>
+
+  <div class="titulo-secao">
+
+    <div>
+
+      <span>
+        🍟 ACOMPANHAMENTOS
+      </span>
+
+      <h2>
+        Para completar
+      </h2>
+
+    </div>
+
+  </div>
+
+
+  <p class="arraste">
+    👉 Arraste para o lado
+  </p>
+
+
+  <div class="carrossel">
+
+    <article
+      class="produto"
+      data-nome="Batata Frita"
+    >
+
+      <div class="produto-foto">
+
+        <img
+          src="https://images.unsplash.com/photo-1573080496219-bb080dd4f877?auto=format&fit=crop&w=800&q=85"
+          alt="Batata Frita"
+        >
+
+      </div>
+
+
+      <h3>
+        Batata Frita
+      </h3>
+
+
+      <p>
+        Batata crocante com tempero especial.
+      </p>
+
+
+      <strong class="preco">
+        R$ 9,90
+      </strong>
+
+
+      <button
+        onclick="adicionar('Batata Frita',9.90)"
+      >
+        ADICIONAR
+      </button>
+
+    </article>
+
+
+    <article
+      class="produto"
+      data-nome="Refrigerante"
+    >
+
+      <div class="produto-foto">
+
+        <img
+          src="https://images.unsplash.com/photo-1629203851122-3726ecdf080e?auto=format&fit=crop&w=800&q=85"
+          alt="Refrigerante"
+        >
+
+      </div>
+
+
+      <h3>
+        Refrigerante
+      </h3>
+
+
+      <p>
+        Refrigerante gelado.
+      </p>
+
+
+      <strong class="preco">
+        R$ 6,00
+      </strong>
+
+
+      <button
+        onclick="adicionar('Refrigerante',6.00)"
+      >
+        ADICIONAR
+      </button>
+
+    </article>
+
+  </div>
+
+</section>
+
+
+<!-- =========================
+     SOBRE
+========================= -->
+
+<section class="sobre">
+
+  <span>
+    ❤️ ALENCAR BURGER
+  </span>
+
+  <h2>
+    Feito para matar a fome.
+  </h2>
+
+  <p>
+    Hambúrgueres preparados com carinho,
+    ingredientes selecionados e aquele sabor
+    que dá vontade de pedir de novo.
+  </p>
+
+  <div class="informacoes">
+
+    <div>
+      <strong>🍔</strong>
+      <span>Artesanal</span>
+    </div>
+
+    <div>
+      <strong>⚡</strong>
+      <span>Pedido rápido</span>
+    </div>
+
+    <div>
+      <strong>📲</strong>
+      <span>Pedido pelo WhatsApp</span>
+    </div>
+
+  </div>
+
+</section>
+
 
 </main>
 
 
-<!-- CARRINHO -->
+<!-- =========================
+     CARRINHO
+========================= -->
 
-<div id="carrinho" class="carrinho">
+<div
+  id="carrinho"
+  class="carrinho"
+>
 
   <div class="carrinho-topo">
 
     <div>
-      <span class="carrinho-label">SEU PEDIDO</span>
-      <h2>🛒 Carrinho</h2>
+
+      <span class="carrinho-label">
+        SEU PEDIDO
+      </span>
+
+      <h2>
+        🛒 Carrinho
+      </h2>
+
     </div>
 
-    <button onclick="fecharCarrinho()">✕</button>
+
+    <button onclick="fecharCarrinho()">
+      ✕
+    </button>
 
   </div>
+
 
   <div id="listaPedido">
-    <p class="vazio">Seu carrinho está vazio.</p>
+
+    <p class="vazio">
+      Seu carrinho está vazio.
+    </p>
+
   </div>
+
 
   <div class="total">
-    <span>Total</span>
-    <strong>R$ <span id="total">0,00</span></strong>
+
+    <span>
+      Total
+    </span>
+
+    <strong>
+      R$ <span id="total">0,00</span>
+    </strong>
+
   </div>
 
-  <button class="btn-finalizar" onclick="abrirFinalizacao()">
+
+  <button
+    class="btn-finalizar"
+    onclick="abrirFinalizacao()"
+  >
     FINALIZAR PEDIDO
   </button>
 
 </div>
 
 
-<!-- FINALIZAÇÃO -->
+<!-- =========================
+     FINALIZAÇÃO
+========================= -->
 
-<div id="finalizacao" class="modal">
+<div
+  id="finalizacao"
+  class="modal"
+>
 
   <div class="modal-conteudo">
 
     <div class="modal-topo">
+
       <div>
-        <span class="carrinho-label">ÚLTIMA ETAPA</span>
-        <h2>📋 Finalizar pedido</h2>
+
+        <span class="carrinho-label">
+          ÚLTIMA ETAPA
+        </span>
+
+        <h2>
+          📋 Finalizar pedido
+        </h2>
+
       </div>
 
-      <button onclick="fecharFinalizacao()">✕</button>
+
+      <button onclick="fecharFinalizacao()">
+        ✕
+      </button>
+
     </div>
 
 
-    <label>Seu nome</label>
+    <label>
+      Seu nome
+    </label>
 
     <input
       type="text"
@@ -414,7 +993,9 @@
     >
 
 
-    <label>Endereço / local de entrega</label>
+    <label>
+      Endereço / local de entrega
+    </label>
 
     <textarea
       id="endereco"
@@ -422,7 +1003,10 @@
     ></textarea>
 
 
-    <label>Forma de pagamento</label>
+    <label>
+      Forma de pagamento
+    </label>
+
 
     <div class="pagamentos">
 
@@ -433,12 +1017,14 @@
         💠 Pix
       </button>
 
+
       <button
         class="pagamento"
         onclick="selecionarPagamento('Dinheiro',this)"
       >
         💵 Dinheiro
       </button>
+
 
       <button
         class="pagamento"
@@ -450,9 +1036,14 @@
     </div>
 
 
-    <div id="trocoArea" class="troco escondida">
+    <div
+      id="trocoArea"
+      class="troco escondida"
+    >
 
-      <label>Troco para quanto?</label>
+      <label>
+        Troco para quanto?
+      </label>
 
       <input
         type="number"
@@ -465,7 +1056,9 @@
 
     <div class="resumo-final">
 
-      <span>Total do pedido</span>
+      <span>
+        Total do pedido
+      </span>
 
       <strong>
         R$ <span id="totalFinal">0,00</span>
@@ -478,7 +1071,7 @@
       class="btn-whatsapp"
       onclick="enviarWhatsApp()"
     >
-      📲 FINALIZAR PELO WHATSAPP
+      📲 ENVIAR PEDIDO PELO WHATSAPP
     </button>
 
   </div>
@@ -486,13 +1079,51 @@
 </div>
 
 
+<!-- =========================
+     NAVEGAÇÃO MOBILE
+========================= -->
+
+<nav class="nav-mobile">
+
+  <button onclick="voltarInicio()">
+    <span>🏠</span>
+    <small>Início</small>
+  </button>
+
+
+  <button onclick="irPara('hamburgueres')">
+    <span>🍔</span>
+    <small>Cardápio</small>
+  </button>
+
+
+  <button onclick="mostrarPromocoes()">
+    <span>🔥</span>
+    <small>Ofertas</small>
+  </button>
+
+
+  <button onclick="abrirCarrinho()">
+    <span>🛒</span>
+    <small>Carrinho</small>
+  </button>
+
+</nav>
+
+
 <footer>
 
-  <strong>🍔 ALENCAR BURGER</strong>
+  <strong>
+    🍔 ALENCAR BURGER
+  </strong>
 
-  <p>O sabor que faz você voltar.</p>
+  <p>
+    O sabor que faz você voltar.
+  </p>
 
-  <small>Seu pedido será enviado pelo WhatsApp.</small>
+  <small>
+    Pedidos pelo WhatsApp
+  </small>
 
 </footer>
 
