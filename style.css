@@ -11,23 +11,22 @@ html {
 body {
   font-family: Arial, sans-serif;
   background: #0d0d0d;
-  color: #fff;
+  color: white;
   overflow-x: hidden;
 }
 
+button {
+  font-family: inherit;
+}
 
-/* =========================
-   CAPA
-========================= */
+
+/* CAPA */
 
 .capa {
   min-height: 100vh;
 
   background:
-    linear-gradient(
-      rgba(0,0,0,.55),
-      rgba(0,0,0,.88)
-    ),
+    linear-gradient(rgba(0,0,0,.55),rgba(0,0,0,.9)),
     url("https://images.unsplash.com/photo-1568901346375-23c9450c58cd?auto=format&fit=crop&w=1400&q=90");
 
   background-size: cover;
@@ -46,8 +45,16 @@ body {
 }
 
 .logo {
-  font-size: 80px;
-  margin-bottom: 15px;
+  font-size: 75px;
+  margin-bottom: 10px;
+}
+
+.capa-tag {
+  color: #ffb000;
+  font-size: 12px;
+  font-weight: bold;
+  letter-spacing: 2px;
+  margin-bottom: 10px;
 }
 
 .capa h1 {
@@ -56,7 +63,7 @@ body {
   margin-bottom: 12px;
 }
 
-.capa p {
+.capa p:not(.capa-tag) {
   color: #ddd;
   font-size: 20px;
   margin-bottom: 35px;
@@ -79,14 +86,15 @@ body {
 }
 
 
-/* =========================
-   TOPO
-========================= */
+/* SITE */
 
 .site {
   max-width: 1150px;
   margin: auto;
 }
+
+
+/* TOPO */
 
 .topo {
   height: 70px;
@@ -104,8 +112,10 @@ body {
   backdrop-filter: blur(10px);
 }
 
-.mini-logo {
-  margin-right: 7px;
+.marca {
+  display: flex;
+  align-items: center;
+  gap: 7px;
 }
 
 .btn-carrinho {
@@ -119,9 +129,7 @@ body {
 }
 
 
-/* =========================
-   BANNER
-========================= */
+/* BANNER */
 
 .banner-promocao {
   margin: 25px 15px;
@@ -129,12 +137,7 @@ body {
 
   border-radius: 18px;
 
-  background:
-    linear-gradient(
-      120deg,
-      #211500,
-      #302000
-    );
+  background: linear-gradient(120deg,#211500,#302000);
 
   border: 1px solid #6c4b00;
 
@@ -146,10 +149,12 @@ body {
 }
 
 .banner-promocao span,
-.titulo-secao span {
+.titulo-secao span,
+.carrinho-label {
   color: #ffb000;
-  font-size: 13px;
+  font-size: 12px;
   font-weight: bold;
+  letter-spacing: .5px;
 }
 
 .banner-promocao h2 {
@@ -171,12 +176,56 @@ body {
 }
 
 
-/* =========================
-   SEÇÕES
-========================= */
+/* CATEGORIAS */
+
+.categorias {
+  display: flex;
+  gap: 10px;
+
+  padding: 10px 15px 20px;
+
+  overflow-x: auto;
+
+  scrollbar-width: none;
+}
+
+.categorias::-webkit-scrollbar {
+  display: none;
+}
+
+.categoria {
+  flex: 0 0 auto;
+
+  background: #191919;
+  color: #ccc;
+
+  border: 1px solid #303030;
+
+  padding: 11px 15px;
+
+  border-radius: 30px;
+
+  cursor: pointer;
+
+  white-space: nowrap;
+}
+
+.categoria.ativa {
+  background: #ffb000;
+  color: #111;
+  border-color: #ffb000;
+  font-weight: bold;
+}
+
+
+/* SEÇÕES */
 
 .secao {
   padding: 25px 15px;
+}
+
+.escondida {
+  display: none !important;
 }
 
 .titulo-secao {
@@ -192,15 +241,13 @@ body {
 }
 
 .arraste {
-  color: #999;
+  color: #888;
   font-size: 13px;
   margin-bottom: 15px;
 }
 
 
-/* =========================
-   CARROSSEL
-========================= */
+/* CARROSSEL */
 
 .carrossel {
   display: flex;
@@ -225,9 +272,7 @@ body {
 }
 
 
-/* =========================
-   PRODUTOS
-========================= */
+/* PRODUTOS */
 
 .produto {
   position: relative;
@@ -245,24 +290,25 @@ body {
   scroll-snap-align: start;
 
   box-shadow: 0 8px 25px rgba(0,0,0,.25);
+
+  transition: .2s;
 }
 
+.produto:hover {
+  transform: translateY(-3px);
+}
 
-/* =========================
-   FOTOS DOS PRODUTOS
-========================= */
+.produto.destaque {
+  border-color: #6c4b00;
+}
 
 .produto-foto {
   width: 100%;
-  height: 145px;
+  height: 135px;
 
   border-radius: 13px;
 
   background: #252525;
-
-  display: flex;
-  align-items: center;
-  justify-content: center;
 
   overflow: hidden;
 
@@ -275,11 +321,14 @@ body {
 
   object-fit: cover;
 
-  border-radius: 13px;
-
   display: block;
+
+  transition: transform .3s;
 }
 
+.produto:hover .produto-foto img {
+  transform: scale(1.04);
+}
 
 .produto h3 {
   font-size: 19px;
@@ -290,7 +339,6 @@ body {
   color: #aaa;
   font-size: 14px;
   line-height: 1.4;
-
   min-height: 58px;
 }
 
@@ -308,7 +356,6 @@ body {
   width: 100%;
 
   background: #ffb000;
-
   color: #111;
 
   border: none;
@@ -320,23 +367,35 @@ body {
   font-weight: bold;
 
   cursor: pointer;
+
+  transition: .15s;
 }
 
 .produto button:active {
   transform: scale(.97);
 }
 
+.mais-vendido {
+  position: absolute;
 
-/* =========================
-   PROMOÇÃO
-========================= */
+  top: 25px;
+  left: 25px;
 
-.escondida {
-  display: none !important;
+  z-index: 2;
+
+  background: #111;
+  color: #ffb000;
+
+  padding: 6px 9px;
+
+  border-radius: 7px;
+
+  font-size: 10px;
+  font-weight: bold;
 }
 
 .promocao {
-  border: 1px solid #ffb000;
+  border-color: #ffb000;
 }
 
 .selo {
@@ -345,6 +404,8 @@ body {
   top: 25px;
   left: 25px;
 
+  z-index: 2;
+
   background: #ffb000;
   color: #111;
 
@@ -352,10 +413,8 @@ body {
 
   border-radius: 7px;
 
-  font-size: 11px;
+  font-size: 10px;
   font-weight: bold;
-
-  z-index: 2;
 }
 
 .precos del {
@@ -374,21 +433,22 @@ body {
   margin: 4px 0 12px;
 }
 
-.fechar-promocoes {
+.fechar {
   background: #292929;
   color: white;
+
   border: none;
-  border-radius: 50%;
+
   width: 35px;
   height: 35px;
+
+  border-radius: 50%;
 
   cursor: pointer;
 }
 
 
-/* =========================
-   CARRINHO
-========================= */
+/* CARRINHO */
 
 .carrinho {
   position: fixed;
@@ -430,6 +490,7 @@ body {
 .modal-topo button {
   background: #292929;
   color: white;
+
   border: none;
 
   width: 35px;
@@ -443,21 +504,56 @@ body {
 .item-pedido {
   background: #252525;
 
-  padding: 12px;
+  padding: 10px;
 
-  border-radius: 9px;
+  border-radius: 10px;
 
-  margin: 7px 0;
+  margin: 8px 0;
 
-  display: flex;
+  display: grid;
+
+  grid-template-columns: 1fr auto;
+
+  gap: 10px;
+
   align-items: center;
-  justify-content: space-between;
 }
 
-.item-pedido button {
-  background: transparent;
+.item-info strong {
+  display: block;
+  margin-bottom: 4px;
+}
+
+.item-info small {
+  color: #aaa;
+}
+
+.controles {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.controles button {
+  width: 30px;
+  height: 30px;
+
   border: none;
+
+  border-radius: 7px;
+
+  background: #333;
+
+  color: white;
+
   cursor: pointer;
+
+  font-weight: bold;
+}
+
+.controles .quantidade {
+  min-width: 18px;
+  text-align: center;
 }
 
 .vazio {
@@ -500,9 +596,7 @@ body {
 }
 
 
-/* =========================
-   MODAL FINALIZAÇÃO
-========================= */
+/* MODAL */
 
 .modal {
   position: fixed;
@@ -583,21 +677,18 @@ body {
 }
 
 
-/* =========================
-   PAGAMENTO
-========================= */
+/* PAGAMENTO */
 
 .pagamentos {
   display: grid;
 
-  grid-template-columns: repeat(3, 1fr);
+  grid-template-columns: repeat(3,1fr);
 
   gap: 8px;
 }
 
 .pagamento {
   background: #292929;
-
   color: white;
 
   border: 1px solid #444;
@@ -625,7 +716,6 @@ body {
   display: flex;
 
   justify-content: space-between;
-
   align-items: center;
 
   background: #252525;
@@ -665,9 +755,7 @@ body {
 }
 
 
-/* =========================
-   RODAPÉ
-========================= */
+/* RODAPÉ */
 
 footer {
   text-align: center;
@@ -687,18 +775,21 @@ footer p {
   margin-top: 8px;
 }
 
+footer small {
+  display: block;
+  margin-top: 10px;
+}
 
-/* =========================
-   CELULAR
-========================= */
 
-@media (max-width: 600px) {
+/* CELULAR */
+
+@media (max-width:600px) {
 
   .capa h1 {
     font-size: 34px;
   }
 
-  .capa p {
+  .capa p:not(.capa-tag) {
     font-size: 17px;
   }
 
@@ -721,6 +812,10 @@ footer p {
 
   .pagamentos {
     grid-template-columns: 1fr;
+  }
+
+  .carrinho {
+    padding: 15px;
   }
 
 }
