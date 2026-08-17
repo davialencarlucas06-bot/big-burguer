@@ -1,39 +1,161 @@
 let pedido = [];
+
 let total = 0;
+
 let pagamentoSelecionado = "";
 
 
-/* ENTRAR NO CARDÁPIO */
+/* =========================
+   NÚMERO DO WHATSAPP
+========================= */
+
+const numeroWhatsApp = "5531983927759";
+
+
+/* =========================
+   ENTRAR NO CARDÁPIO
+========================= */
 
 function entrarNoCardapio() {
 
-  document.getElementById("cardapio").scrollIntoView({
-    behavior: "smooth"
-  });
+  document
+    .getElementById("cardapio")
+    .scrollIntoView({
+      behavior: "smooth"
+    });
 
 }
 
 
-/* CATEGORIAS */
+/* =========================
+   INÍCIO
+========================= */
+
+function voltarInicio() {
+
+  document
+    .getElementById("inicio")
+    .scrollIntoView({
+      behavior: "smooth"
+    });
+
+}
+
+
+/* =========================
+   CATEGORIAS
+========================= */
 
 function irPara(id) {
 
-  document.getElementById(id).scrollIntoView({
+  const elemento =
+    document.getElementById(id);
+
+
+  if (!elemento) return;
+
+
+  elemento.scrollIntoView({
     behavior: "smooth",
     block: "start"
   });
 
+
+  document
+    .querySelectorAll(".categoria")
+    .forEach(botao => {
+
+      botao.classList.remove("ativa");
+
+    });
+
 }
 
 
-/* PROMOÇÕES */
+/* =========================
+   PESQUISA
+========================= */
+
+function abrirPesquisa() {
+
+  document
+    .getElementById("pesquisa")
+    .classList.remove("escondida");
+
+  document
+    .getElementById("campoBusca")
+    .focus();
+
+}
+
+
+function fecharPesquisa() {
+
+  document
+    .getElementById("pesquisa")
+    .classList.add("escondida");
+
+  document
+    .getElementById("campoBusca")
+    .value = "";
+
+  pesquisarProdutos();
+
+}
+
+
+function pesquisarProdutos() {
+
+  const busca =
+    document
+      .getElementById("campoBusca")
+      .value
+      .toLowerCase()
+      .trim();
+
+
+  document
+    .querySelectorAll(".produto")
+    .forEach(produto => {
+
+      const nome =
+        (
+          produto.dataset.nome ||
+          produto.innerText
+        )
+        .toLowerCase();
+
+
+      if (
+        busca === "" ||
+        nome.includes(busca)
+      ) {
+
+        produto.style.display = "";
+
+      } else {
+
+        produto.style.display = "none";
+
+      }
+
+    });
+
+}
+
+
+/* =========================
+   PROMOÇÕES
+========================= */
 
 function mostrarPromocoes() {
 
   const promocoes =
     document.getElementById("promocoes");
 
+
   promocoes.classList.remove("escondida");
+
 
   setTimeout(() => {
 
@@ -56,24 +178,79 @@ function fecharPromocoes() {
 }
 
 
-/* ADICIONAR */
+/* =========================
+   FAVORITOS
+========================= */
 
-function adicionar(nome, preco) {
+function favoritar(botao,nome) {
 
-  const itemExistente =
-    pedido.find(item => item.nome === nome);
+  botao.classList.toggle("favoritado");
 
 
-  if (itemExistente) {
+  if (botao.classList.contains("favoritado")) {
 
-    itemExistente.quantidade++;
+    botao.innerText = "♥";
+
+    salvarFavorito(nome);
+
+  } else {
+
+    botao.innerText = "♡";
+
+  }
+
+}
+
+
+function salvarFavorito(nome) {
+
+  let favoritos =
+    JSON.parse(
+      localStorage.getItem("favoritosBurger")
+    ) || [];
+
+
+  if (!favoritos.includes(nome)) {
+
+    favoritos.push(nome);
+
+  }
+
+
+  localStorage.setItem(
+    "favoritosBurger",
+    JSON.stringify(favoritos)
+  );
+
+}
+
+
+/* =========================
+   ADICIONAR
+========================= */
+
+function adicionar(nome,preco) {
+
+  const existente =
+    pedido.find(
+      item => item.nome === nome
+    );
+
+
+  if (existente) {
+
+    existente.quantidade++;
 
   } else {
 
     pedido.push({
+
       nome: nome,
+
       preco: preco,
+
       quantidade: 1
+
     });
 
   }
@@ -88,32 +265,48 @@ function adicionar(nome, preco) {
 }
 
 
-/* TOTAL */
+/* =========================
+   TOTAL
+========================= */
 
 function calcularTotal() {
 
-  total = pedido.reduce((soma,item) => {
+  total =
+    pedido.reduce(
+      (soma,item) => {
 
-    return soma +
-      (item.preco * item.quantidade);
+        return soma +
+          item.preco * item.quantidade;
 
-  },0);
+      },
+      0
+    );
 
 }
 
 
-/* CARRINHO */
+/* =========================
+   ATUALIZAR CARRINHO
+========================= */
 
 function atualizarPedido() {
 
   const lista =
-    document.getElementById("listaPedido");
+    document.getElementById(
+      "listaPedido"
+    );
+
 
   const contador =
-    document.getElementById("contador");
+    document.getElementById(
+      "contador"
+    );
+
 
   const totalElemento =
-    document.getElementById("total");
+    document.getElementById(
+      "total"
+    );
 
 
   lista.innerHTML = "";
@@ -121,12 +314,14 @@ function atualizarPedido() {
 
   const quantidadeTotal =
     pedido.reduce(
-      (soma,item) => soma + item.quantidade,
+      (soma,item) =>
+        soma + item.quantidade,
       0
     );
 
 
-  contador.innerText = quantidadeTotal;
+  contador.innerText =
+    quantidadeTotal;
 
 
   if (pedido.length === 0) {
@@ -134,55 +329,72 @@ function atualizarPedido() {
     lista.innerHTML =
       '<p class="vazio">Seu carrinho está vazio.</p>';
 
-    totalElemento.innerText = "0,00";
+    totalElemento.innerText =
+      "0,00";
 
     return;
+
   }
 
 
-  pedido.forEach((item,index) => {
+  pedido.forEach(
+    (item,index) => {
 
-    const div =
-      document.createElement("div");
-
-    div.className = "item-pedido";
-
-
-    div.innerHTML = `
-
-      <div class="item-info">
-
-        <strong>${item.nome}</strong>
-
-        <small>
-          R$ ${formatarPreco(item.preco)}
-          cada
-        </small>
-
-      </div>
-
-      <div class="controles">
-
-        <button onclick="diminuir(${index})">
-          −
-        </button>
-
-        <span class="quantidade">
-          ${item.quantidade}
-        </span>
-
-        <button onclick="aumentar(${index})">
-          +
-        </button>
-
-      </div>
-
-    `;
+      const div =
+        document.createElement(
+          "div"
+        );
 
 
-    lista.appendChild(div);
+      div.className =
+        "item-pedido";
 
-  });
+
+      div.innerHTML = `
+
+        <div class="item-info">
+
+          <strong>
+            ${item.nome}
+          </strong>
+
+          <small>
+            R$ ${formatarPreco(item.preco)}
+            cada
+          </small>
+
+        </div>
+
+
+        <div class="controles">
+
+          <button
+            onclick="diminuir(${index})"
+          >
+            −
+          </button>
+
+
+          <span class="quantidade">
+            ${item.quantidade}
+          </span>
+
+
+          <button
+            onclick="aumentar(${index})"
+          >
+            +
+          </button>
+
+        </div>
+
+      `;
+
+
+      lista.appendChild(div);
+
+    }
+  );
 
 
   totalElemento.innerText =
@@ -191,7 +403,9 @@ function atualizarPedido() {
 }
 
 
-/* AUMENTAR */
+/* =========================
+   AUMENTAR
+========================= */
 
 function aumentar(index) {
 
@@ -204,14 +418,18 @@ function aumentar(index) {
 }
 
 
-/* DIMINUIR */
+/* =========================
+   DIMINUIR
+========================= */
 
 function diminuir(index) {
 
   pedido[index].quantidade--;
 
 
-  if (pedido[index].quantidade <= 0) {
+  if (
+    pedido[index].quantidade <= 0
+  ) {
 
     pedido.splice(index,1);
 
@@ -225,7 +443,9 @@ function diminuir(index) {
 }
 
 
-/* ABRIR CARRINHO */
+/* =========================
+   CARRINHO
+========================= */
 
 function abrirCarrinho() {
 
@@ -236,8 +456,6 @@ function abrirCarrinho() {
 }
 
 
-/* FECHAR CARRINHO */
-
 function fecharCarrinho() {
 
   document
@@ -247,15 +465,20 @@ function fecharCarrinho() {
 }
 
 
-/* FINALIZAÇÃO */
+/* =========================
+   FINALIZAÇÃO
+========================= */
 
 function abrirFinalizacao() {
 
   if (pedido.length === 0) {
 
-    alert("Adicione algum produto ao pedido primeiro!");
+    alert(
+      "Adicione algum produto ao pedido primeiro!"
+    );
 
     return;
+
   }
 
 
@@ -281,95 +504,135 @@ function fecharFinalizacao() {
 }
 
 
-/* PAGAMENTO */
+/* =========================
+   PAGAMENTO
+========================= */
 
-function selecionarPagamento(pagamento,botao) {
+function selecionarPagamento(
+  pagamento,
+  botao
+) {
 
-  pagamentoSelecionado = pagamento;
+  pagamentoSelecionado =
+    pagamento;
 
 
   document
     .querySelectorAll(".pagamento")
     .forEach(elemento => {
 
-      elemento.classList.remove("selecionado");
+      elemento.classList.remove(
+        "selecionado"
+      );
 
     });
 
 
-  botao.classList.add("selecionado");
+  botao.classList.add(
+    "selecionado"
+  );
 
 
   const trocoArea =
-    document.getElementById("trocoArea");
+    document.getElementById(
+      "trocoArea"
+    );
 
 
-  if (pagamento === "Dinheiro") {
+  if (
+    pagamento === "Dinheiro"
+  ) {
 
-    trocoArea.classList.remove("escondida");
+    trocoArea.classList.remove(
+      "escondida"
+    );
 
   } else {
 
-    trocoArea.classList.add("escondida");
+    trocoArea.classList.add(
+      "escondida"
+    );
 
   }
 
 }
 
 
-/* WHATSAPP */
+/* =========================
+   WHATSAPP
+========================= */
 
 function enviarWhatsApp() {
 
   if (pedido.length === 0) {
 
-    alert("Seu pedido está vazio!");
+    alert(
+      "Seu pedido está vazio!"
+    );
 
     return;
+
   }
 
 
   const nome =
     document
-      .getElementById("nomeCliente")
+      .getElementById(
+        "nomeCliente"
+      )
       .value
       .trim();
 
 
   const endereco =
     document
-      .getElementById("endereco")
+      .getElementById(
+        "endereco"
+      )
       .value
       .trim();
 
 
   if (nome === "") {
 
-    alert("Digite seu nome.");
+    alert(
+      "Digite seu nome."
+    );
 
     return;
+
   }
 
 
   if (endereco === "") {
 
-    alert("Digite seu endereço ou ponto de referência.");
+    alert(
+      "Digite seu endereço ou ponto de referência."
+    );
 
     return;
+
   }
 
 
-  if (pagamentoSelecionado === "") {
+  if (
+    pagamentoSelecionado === ""
+  ) {
 
-    alert("Selecione uma forma de pagamento.");
+    alert(
+      "Selecione uma forma de pagamento."
+    );
 
     return;
+
   }
 
 
   const troco =
     document
-      .getElementById("troco")
+      .getElementById(
+        "troco"
+      )
       .value;
 
 
@@ -392,7 +655,8 @@ function enviarWhatsApp() {
   pedido.forEach(item => {
 
     const subtotal =
-      item.preco * item.quantidade;
+      item.preco *
+      item.quantidade;
 
 
     mensagem +=
@@ -410,7 +674,8 @@ function enviarWhatsApp() {
 
 
   if (
-    pagamentoSelecionado === "Dinheiro" &&
+    pagamentoSelecionado ===
+      "Dinheiro" &&
     troco !== ""
   ) {
 
@@ -420,30 +685,25 @@ function enviarWhatsApp() {
   }
 
 
-  /*
-    COLOQUE AQUI O NÚMERO REAL
-    DO WHATSAPP DA HAMBURGUERIA.
-
-    Exemplo:
-    5531999999999
-
-    Sem +, espaços ou hífens.
-  */
-
-  const numero =
-    "5531999999999";
+  mensagem +=
+    "%0AObrigado! 🍔";
 
 
   const url =
-    `https://wa.me/${numero}?text=${mensagem}`;
+    `https://wa.me/${numeroWhatsApp}?text=${mensagem}`;
 
 
-  window.open(url,"_blank");
+  window.open(
+    url,
+    "_blank"
+  );
 
 }
 
 
-/* FORMATAÇÃO */
+/* =========================
+   PREÇO
+========================= */
 
 function formatarPreco(valor) {
 
@@ -452,3 +712,58 @@ function formatarPreco(valor) {
     .replace(".",",");
 
 }
+
+
+/* =========================
+   FECHAR MODAL CLICANDO FORA
+========================= */
+
+document.addEventListener(
+  "click",
+  function(event) {
+
+    const modal =
+      document.getElementById(
+        "finalizacao"
+      );
+
+
+    if (
+      event.target === modal
+    ) {
+
+      fecharFinalizacao();
+
+    }
+
+  }
+);
+
+
+/* =========================
+   ATALHO ESC
+========================= */
+
+document.addEventListener(
+  "keydown",
+  function(event) {
+
+    if (
+      event.key === "Escape"
+    ) {
+
+      fecharFinalizacao();
+
+      fecharCarrinho();
+
+    }
+
+  }
+);
+
+
+/* =========================
+   INICIAR
+========================= */
+
+atualizarPedido();
