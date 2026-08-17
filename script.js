@@ -4,16 +4,11 @@ let total = 0;
 
 let pagamentoSelecionado = "";
 
-
-/* =========================
-   NÚMERO DO WHATSAPP
-========================= */
-
 const numeroWhatsApp = "5531983927759";
 
 
 /* =========================
-   ENTRAR NO CARDÁPIO
+   CAPA
 ========================= */
 
 function entrarNoCardapio() {
@@ -27,10 +22,6 @@ function entrarNoCardapio() {
 }
 
 
-/* =========================
-   INÍCIO
-========================= */
-
 function voltarInicio() {
 
   document
@@ -43,7 +34,7 @@ function voltarInicio() {
 
 
 /* =========================
-   CATEGORIAS
+   NAVEGAÇÃO
 ========================= */
 
 function irPara(id) {
@@ -51,23 +42,12 @@ function irPara(id) {
   const elemento =
     document.getElementById(id);
 
-
   if (!elemento) return;
-
 
   elemento.scrollIntoView({
     behavior: "smooth",
     block: "start"
   });
-
-
-  document
-    .querySelectorAll(".categoria")
-    .forEach(botao => {
-
-      botao.classList.remove("ativa");
-
-    });
 
 }
 
@@ -122,22 +102,14 @@ function pesquisarProdutos() {
         (
           produto.dataset.nome ||
           produto.innerText
-        )
-        .toLowerCase();
+        ).toLowerCase();
 
 
-      if (
+      produto.style.display =
         busca === "" ||
         nome.includes(busca)
-      ) {
-
-        produto.style.display = "";
-
-      } else {
-
-        produto.style.display = "none";
-
-      }
+          ? ""
+          : "none";
 
     });
 
@@ -150,21 +122,18 @@ function pesquisarProdutos() {
 
 function mostrarPromocoes() {
 
-  const promocoes =
+  const secao =
     document.getElementById("promocoes");
 
-
-  promocoes.classList.remove("escondida");
-
+  secao.classList.remove("escondida");
 
   setTimeout(() => {
 
-    promocoes.scrollIntoView({
-      behavior: "smooth",
-      block: "start"
+    secao.scrollIntoView({
+      behavior: "smooth"
     });
 
-  },100);
+  }, 100);
 
 }
 
@@ -182,16 +151,20 @@ function fecharPromocoes() {
    FAVORITOS
 ========================= */
 
-function favoritar(botao,nome) {
+function favoritar(botao) {
 
-  botao.classList.toggle("favoritado");
+  botao.classList.toggle(
+    "favoritado"
+  );
 
 
-  if (botao.classList.contains("favoritado")) {
+  if (
+    botao.classList.contains(
+      "favoritado"
+    )
+  ) {
 
     botao.innerText = "♥";
-
-    salvarFavorito(nome);
 
   } else {
 
@@ -202,34 +175,11 @@ function favoritar(botao,nome) {
 }
 
 
-function salvarFavorito(nome) {
-
-  let favoritos =
-    JSON.parse(
-      localStorage.getItem("favoritosBurger")
-    ) || [];
-
-
-  if (!favoritos.includes(nome)) {
-
-    favoritos.push(nome);
-
-  }
-
-
-  localStorage.setItem(
-    "favoritosBurger",
-    JSON.stringify(favoritos)
-  );
-
-}
-
-
 /* =========================
-   ADICIONAR
+   CARRINHO
 ========================= */
 
-function adicionar(nome,preco) {
+function adicionar(nome, preco) {
 
   const existente =
     pedido.find(
@@ -244,13 +194,9 @@ function adicionar(nome,preco) {
   } else {
 
     pedido.push({
-
-      nome: nome,
-
-      preco: preco,
-
+      nome,
+      preco,
       quantidade: 1
-
     });
 
   }
@@ -265,29 +211,51 @@ function adicionar(nome,preco) {
 }
 
 
-/* =========================
-   TOTAL
-========================= */
+function aumentar(index) {
+
+  pedido[index].quantidade++;
+
+  calcularTotal();
+
+  atualizarPedido();
+
+}
+
+
+function diminuir(index) {
+
+  pedido[index].quantidade--;
+
+
+  if (
+    pedido[index].quantidade <= 0
+  ) {
+
+    pedido.splice(index, 1);
+
+  }
+
+
+  calcularTotal();
+
+  atualizarPedido();
+
+}
+
 
 function calcularTotal() {
 
   total =
     pedido.reduce(
-      (soma,item) => {
-
-        return soma +
-          item.preco * item.quantidade;
-
-      },
+      (soma, item) =>
+        soma +
+        item.preco *
+        item.quantidade,
       0
     );
 
 }
 
-
-/* =========================
-   ATUALIZAR CARRINHO
-========================= */
 
 function atualizarPedido() {
 
@@ -296,12 +264,10 @@ function atualizarPedido() {
       "listaPedido"
     );
 
-
   const contador =
     document.getElementById(
       "contador"
     );
-
 
   const totalElemento =
     document.getElementById(
@@ -312,22 +278,24 @@ function atualizarPedido() {
   lista.innerHTML = "";
 
 
-  const quantidadeTotal =
+  const quantidade =
     pedido.reduce(
-      (soma,item) =>
+      (soma, item) =>
         soma + item.quantidade,
       0
     );
 
 
   contador.innerText =
-    quantidadeTotal;
+    quantidade;
 
 
   if (pedido.length === 0) {
 
     lista.innerHTML =
-      '<p class="vazio">Seu carrinho está vazio.</p>';
+      `<p class="vazio">
+        Seu carrinho está vazio.
+      </p>`;
 
     totalElemento.innerText =
       "0,00";
@@ -338,13 +306,12 @@ function atualizarPedido() {
 
 
   pedido.forEach(
-    (item,index) => {
+    (item, index) => {
 
       const div =
         document.createElement(
           "div"
         );
-
 
       div.className =
         "item-pedido";
@@ -365,7 +332,6 @@ function atualizarPedido() {
 
         </div>
 
-
         <div class="controles">
 
           <button
@@ -374,11 +340,9 @@ function atualizarPedido() {
             −
           </button>
 
-
-          <span class="quantidade">
+          <span>
             ${item.quantidade}
           </span>
-
 
           <button
             onclick="aumentar(${index})"
@@ -402,50 +366,6 @@ function atualizarPedido() {
 
 }
 
-
-/* =========================
-   AUMENTAR
-========================= */
-
-function aumentar(index) {
-
-  pedido[index].quantidade++;
-
-  calcularTotal();
-
-  atualizarPedido();
-
-}
-
-
-/* =========================
-   DIMINUIR
-========================= */
-
-function diminuir(index) {
-
-  pedido[index].quantidade--;
-
-
-  if (
-    pedido[index].quantidade <= 0
-  ) {
-
-    pedido.splice(index,1);
-
-  }
-
-
-  calcularTotal();
-
-  atualizarPedido();
-
-}
-
-
-/* =========================
-   CARRINHO
-========================= */
 
 function abrirCarrinho() {
 
@@ -474,7 +394,7 @@ function abrirFinalizacao() {
   if (pedido.length === 0) {
 
     alert(
-      "Adicione algum produto ao pedido primeiro!"
+      "Adicione algum produto ao carrinho primeiro!"
     );
 
     return;
@@ -519,9 +439,9 @@ function selecionarPagamento(
 
   document
     .querySelectorAll(".pagamento")
-    .forEach(elemento => {
+    .forEach(item => {
 
-      elemento.classList.remove(
+      item.classList.remove(
         "selecionado"
       );
 
@@ -533,7 +453,7 @@ function selecionarPagamento(
   );
 
 
-  const trocoArea =
+  const troco =
     document.getElementById(
       "trocoArea"
     );
@@ -543,13 +463,13 @@ function selecionarPagamento(
     pagamento === "Dinheiro"
   ) {
 
-    trocoArea.classList.remove(
+    troco.classList.remove(
       "escondida"
     );
 
   } else {
 
-    trocoArea.classList.add(
+    troco.classList.add(
       "escondida"
     );
 
@@ -561,6 +481,26 @@ function selecionarPagamento(
 /* =========================
    WHATSAPP
 ========================= */
+
+function abrirSuporte() {
+
+  const mensagem =
+    encodeURIComponent(
+      "Olá! Preciso de ajuda com o Alencar Burger. 🆘"
+    );
+
+
+  const url =
+    `https://wa.me/${numeroWhatsApp}?text=${mensagem}`;
+
+
+  window.open(
+    url,
+    "_blank"
+  );
+
+}
+
 
 function enviarWhatsApp() {
 
@@ -593,7 +533,7 @@ function enviarWhatsApp() {
       .trim();
 
 
-  if (nome === "") {
+  if (!nome) {
 
     alert(
       "Digite seu nome."
@@ -604,10 +544,10 @@ function enviarWhatsApp() {
   }
 
 
-  if (endereco === "") {
+  if (!endereco) {
 
     alert(
-      "Digite seu endereço ou ponto de referência."
+      "Digite seu endereço."
     );
 
     return;
@@ -615,12 +555,10 @@ function enviarWhatsApp() {
   }
 
 
-  if (
-    pagamentoSelecionado === ""
-  ) {
+  if (!pagamentoSelecionado) {
 
     alert(
-      "Selecione uma forma de pagamento."
+      "Selecione a forma de pagamento."
     );
 
     return;
@@ -641,11 +579,11 @@ function enviarWhatsApp() {
 
 
   mensagem +=
-    `👤 *Nome:* ${nome}%0A`;
+    `👤 *Nome:* ${encodeURIComponent(nome)}%0A`;
 
 
   mensagem +=
-    `📍 *Endereço:* ${endereco}%0A%0A`;
+    `📍 *Endereço:* ${encodeURIComponent(endereco)}%0A%0A`;
 
 
   mensagem +=
@@ -660,7 +598,7 @@ function enviarWhatsApp() {
 
 
     mensagem +=
-      `• ${item.quantidade}x ${item.nome} - R$ ${formatarPreco(subtotal)}%0A`;
+      `• ${item.quantidade}x ${encodeURIComponent(item.nome)} - R$ ${formatarPreco(subtotal)}%0A`;
 
   });
 
@@ -674,13 +612,12 @@ function enviarWhatsApp() {
 
 
   if (
-    pagamentoSelecionado ===
-      "Dinheiro" &&
-    troco !== ""
+    pagamentoSelecionado === "Dinheiro" &&
+    troco
   ) {
 
     mensagem +=
-      `💵 *Troco para: R$ ${troco}*%0A`;
+      `💵 *Troco para: R$ ${encodeURIComponent(troco)}*%0A`;
 
   }
 
@@ -698,41 +635,109 @@ function enviarWhatsApp() {
     "_blank"
   );
 
+
+  /*
+    Salva localmente que o pedido
+    foi enviado.
+  */
+
+  localStorage.setItem(
+    "pedidoEnviado",
+    "true"
+  );
+
+
+  fecharFinalizacao();
+
+  fecharCarrinho();
+
+
+  /*
+    Abre acompanhamento
+    depois do envio.
+  */
+
+  setTimeout(() => {
+
+    abrirAcompanhamento();
+
+  }, 500);
+
 }
 
 
 /* =========================
-   PREÇO
+   ACOMPANHAMENTO
+========================= */
+
+function abrirAcompanhamento() {
+
+  document
+    .getElementById(
+      "acompanhamento"
+    )
+    .classList.add("aberto");
+
+}
+
+
+function fecharAcompanhamento() {
+
+  document
+    .getElementById(
+      "acompanhamento"
+    )
+    .classList.remove("aberto");
+
+}
+
+
+/* =========================
+   FORMATAÇÃO
 ========================= */
 
 function formatarPreco(valor) {
 
   return valor
     .toFixed(2)
-    .replace(".",",");
+    .replace(".", ",");
 
 }
 
 
 /* =========================
-   FECHAR MODAL CLICANDO FORA
+   FECHAR MODAIS
 ========================= */
 
 document.addEventListener(
   "click",
   function(event) {
 
-    const modal =
+    const finalizacao =
       document.getElementById(
         "finalizacao"
       );
 
+    const acompanhamento =
+      document.getElementById(
+        "acompanhamento"
+      );
+
 
     if (
-      event.target === modal
+      event.target === finalizacao
     ) {
 
       fecharFinalizacao();
+
+    }
+
+
+    if (
+      event.target === acompanhamento
+    ) {
+
+      fecharAcompanhamento();
 
     }
 
@@ -741,7 +746,7 @@ document.addEventListener(
 
 
 /* =========================
-   ATALHO ESC
+   TECLA ESC
 ========================= */
 
 document.addEventListener(
@@ -752,9 +757,11 @@ document.addEventListener(
       event.key === "Escape"
     ) {
 
+      fecharCarrinho();
+
       fecharFinalizacao();
 
-      fecharCarrinho();
+      fecharAcompanhamento();
 
     }
 
@@ -763,7 +770,51 @@ document.addEventListener(
 
 
 /* =========================
-   INICIAR
+   ANIMAÇÃO AO ROLAR
+========================= */
+
+const observador =
+  new IntersectionObserver(
+    elementos => {
+
+      elementos.forEach(
+        elemento => {
+
+          if (
+            elemento.isIntersecting
+          ) {
+
+            elemento.target.classList.add(
+              "visivel"
+            );
+
+          }
+
+        }
+      );
+
+    },
+    {
+      threshold: 0.1
+    }
+  );
+
+
+document
+  .querySelectorAll(
+    ".secao, .avaliacoes, .info-loja, .ajuda, .suporte"
+  )
+  .forEach(elemento => {
+
+    observador.observe(
+      elemento
+    );
+
+  });
+
+
+/* =========================
+   INICIALIZAÇÃO
 ========================= */
 
 atualizarPedido();
